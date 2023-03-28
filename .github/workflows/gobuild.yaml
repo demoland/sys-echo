@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - main
+env:
+  RELEASE: "v1.0.3"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      RELEASE: 'v1.0.2'
     steps:
     - uses: actions/checkout@v2
 
@@ -27,8 +27,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
-        tag_name: $RELEASE 
-        release_name: Release $RELEASE
+        tag_name: "$RELEASE" 
+        release_name: "Release $RELEASE"
         body: |
           Changelog:
           - Only ubuntu binary
@@ -58,10 +58,10 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t sys-echo .
+      run: docker build --build-arg RELEASE="$RELEASE"  -t sys-echo .
 
     - name: Tag Docker image
-      run: docker tag sys-echo ${{ secrets.DOCKER_USERNAME }}/sys-echo:${RELEASE}
+      run: docker tag sys-echo ${{ secrets.DOCKER_USERNAME }}/sys-echo:$RELEASE
 
     - name: Push Docker image
       uses: docker/build-push-action@v2
