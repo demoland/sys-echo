@@ -5,7 +5,7 @@ on:
     branches:
       - main
 env:
-  RELEASE: "v1.0.3"
+  RELEASE: "v1.0.4"
 
 jobs:
   build:
