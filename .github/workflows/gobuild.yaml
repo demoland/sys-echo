@@ -8,9 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env: 
-      RELEASE_VERSION: 1.0.1
-
     steps:
     - uses: actions/checkout@v2
 
@@ -28,11 +25,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
-        tag_name: $RELEASE_VERSION
-        release_name: Release $RELEASE_VERSION
+        tag_name: v1.0.1
+        release_name: Release v1.0.1
         body: |
           Changelog:
-          - First release
+          - Updated Release
         draft: false
         prerelease: false
 
