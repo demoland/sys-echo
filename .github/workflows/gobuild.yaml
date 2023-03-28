@@ -25,8 +25,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
-        tag_name: v1.0.2
-        release_name: Release v1.0.2
+        tag_name: v1.0.3
+        release_name: Release v1.0.3
         body: |
           Changelog:
           - New version of reslease action
