@@ -27,8 +27,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
-        tag_name: "$RELEASE" 
-        release_name: "Release $RELEASE"
+        tag_name: "${RELEASE}" 
+        release_name: "Release ${RELEASE}"
         body: |
           Changelog:
           - Only ubuntu binary
