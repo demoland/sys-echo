@@ -32,7 +32,6 @@ jobs:
           - New version of reslease action
         draft: false
         prerelease: false
-        owner: danfedick
 
     - name: Upload Ubuntu binary
       uses: actions/upload-release-asset@v1.0.1
