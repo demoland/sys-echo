@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RELEASE: 'v1.0.2'
     steps:
     - uses: actions/checkout@v2
 
@@ -25,8 +27,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
-        tag_name: v1.0.1
-        release_name: Release v1.0.1
+        tag_name: $RELEASE 
+        release_name: Release $RELEASE
         body: |
           Changelog:
           - Only ubuntu binary
@@ -42,3 +44,29 @@ jobs:
         asset_path: ./sys-echo
         asset_name: sys-echo-ubuntu-x86-64
         asset_content_type: application/octet-stream
+  
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: docker build -t sys-echo .
+
+    - name: Tag Docker image
+      run: docker tag sys-echo ${{ secrets.DOCKER_USERNAME }}/sys-echo:${RELEASE}
+
+    - name: Push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/sys-echo:${RELEASE}
+        registry: docker.io
