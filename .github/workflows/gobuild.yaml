@@ -21,7 +21,7 @@ jobs:
 
     - name: Create release
       id: create_release
-      uses: actions/create-release@v1.0.0
+      uses: actions/create-release@v1.1.4
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
@@ -29,9 +29,10 @@ jobs:
         release_name: Release v1.0.2
         body: |
           Changelog:
-          - Made update to the name of the release
+          - New version of reslease action
         draft: false
         prerelease: false
+        owner: danfedick
 
     - name: Upload Ubuntu binary
       uses: actions/upload-release-asset@v1.0.1
