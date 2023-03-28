@@ -25,8 +25,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
-        tag_name: v1.0.3
-        release_name: Release v1.0.3
+        tag_name: v1.0.0
+        release_name: Release v1.0.0
         body: |
           Changelog:
           - New version of reslease action
@@ -43,14 +43,18 @@ jobs:
         asset_name: sys-echo-ubuntu-x86-64
         asset_content_type: application/octet-stream
 
-    # - name: Build Mac binary
-    #   env:
-    #     GOOS: darwin
-    #     GOARCH: amd64
-    #   run: go build -o sys-echo-darwin-x86_64
+    - name: Build Mac binary
+      env:
+        GOOS: darwin
+        GOARCH: amd64
+      run: go build -o sys-echo-darwin-x86_64
 
-    # - name: Upload Mac binary
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: sys-echo-darwin-x86_64
-    #     path: sys-echo-darwin-x86_64
+    - name: Upload Mac binary
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./sys-echo
+        asset_name: sys-echo-darwin-x86-64
+        asset_content_type: application/octet-stream
