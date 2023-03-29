@@ -13,10 +13,10 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Build for Ubuntu
-        run: GOOS=linux go build -o sys-echo-linux
+        run: GOOS=linux go build -o sys-echo-linux main.go
       
       - name: Build for Mac Darwin
-        run: GOOS=darwin go build -o sys-echo-darwin
+        run: GOOS=darwin go build -o sys-echo-darwin main.go
       
       - name: Build Docker Image
         uses: docker/build-push-action@v2
