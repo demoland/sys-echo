@@ -50,6 +50,37 @@ The JSON object returned by the sys-echo server contains the following fields:
 - `os_version`: the version of the operating system running on the server.
 - `custom_message`: the custom message passed in as a command-line argument to the server.
 
+## Installation with Docker
+
+```bash
+docker run -d -p 8080:8080 demoland/sys-echo:latest
+```
+
+## Run as a service: 
+Create a new service file using sudo to open an editor:
+
+```bash
+cp sys-echo.service /etc/systemd/system/sys-echo.service
+```
+
+**Reload the systemd daemon to load the new service:**
+
+```bash
+sudo systemctl daemon-reload
+```
+
+Enable the sys-echo service to start at boot:
+
+```bash
+sudo systemctl enable sys-echo
+```
+
+Start the sys-echo service:
+
+```bash
+sudo systemctl start sys-echo
+```
+
 ## License
 
 sys-echo is released under the MIT License. See the LICENSE file for details.

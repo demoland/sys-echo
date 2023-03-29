@@ -1,0 +1,10 @@
+[Unit]
+Description=sys-echo Golang server
+
+[Service]
+ExecStart=/usr/local/bin/sys-echo -msg "Hello World"
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
