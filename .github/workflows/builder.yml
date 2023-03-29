@@ -27,8 +27,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.sha | truncate(7, '') }}
-          release_name: Release v${{ github.sha | truncate(7, '') }}
+          tag_name: "v${{ github.sha | truncate(5, '') }}"
+          release_name: "Release v${{ github.sha | truncate(5, '') }}"
           body: |
             Changes in this release:
             ${{ join(github.event.commits.*.message, '\n- ') }}
