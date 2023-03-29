@@ -47,6 +47,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           REVISION=$(git rev-parse --short HEAD)
-          docker build . --tag danfedick/sys-echo:v$REVISION
+          docker build . --tag danfedick/sys-echo:v$REVISION --tag danfedick/sys-echo:latest
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push danfedick/sys-echo:v$REVISION
+          docker push danfedick/sys-echo:latest
