@@ -23,6 +23,22 @@ By default, the server will return a custom message of "Hello, world!". You can 
 
 This will start the server with a custom message of "Custom message here".
 
+### Querying the Server
+
+To query the server, you can use the following command:
+
+```bash
+curl -s localhost:8080 |jq -r .
+{
+  "public_ip": "xxx.xxx.xxx.xxx",
+  "private_ip": "xxx.xxx.xxx.xxx",
+  "hostname": "xxxxxx",
+  "root_size": xxxxxx,
+  "os_version": "xxxxxxx",
+  "custom_message": "Custom Message Here"
+}
+```
+
 ## System Information
 
 The JSON object returned by the sys-echo server contains the following fields:
