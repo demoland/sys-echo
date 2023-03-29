@@ -1,11 +1,19 @@
-FROM alpine:latest
+FROM alpine:3.14
 
-RUN apk add --no-cache go git
+# Install dependencies
+RUN apk add --no-cache \
+    wget \
+    jq
 
-ARG RELEASE
-ARG TEST_MESSAGE="This is a test Message"
-RUN wget https://github.com/demoland/sys-echo/releases/download/${RELEASE}/sys-echo-ubuntu-x86-64 -O /usr/local/bin/sys-echo \
-    && chmod +x /usr/local/bin/sys-echo
+# Download sys-echo binary
+ARG SYS_ECHO_VERSION=v1.0.0
+RUN wget -O /usr/local/bin/sys-echo "https://github.com/demoland/sys-echo/releases/download/${SYS_ECHO_VERSION}/sys-echo"
 
+# Make sys-echo binary executable
+RUN chmod +x /usr/local/bin/sys-echo
+
+# Expose port 8080
 EXPOSE 8080
-CMD ["/usr/local/bin/sys-echo",  ${TEST_MESSAGE} ]
+
+# Start sys-echo
+ENTRYPOINT ["/usr/local/bin/sys-echo", "-msg"]
