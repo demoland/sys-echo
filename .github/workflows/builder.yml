@@ -1,5 +1,5 @@
 name: Build and Release
-
+# If Action doesn't run, check: https://www.githubstatus.com/
 on:
   push:
     branches: [ "main" ]
@@ -22,6 +22,18 @@ jobs:
       - name: Build for Mac Darwin
         run: GOOS=darwin go build -o sys-echo-darwin main.go
 
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.sha | truncate(7, '') }}
+          release_name: Release v${{ github.sha | truncate(7, '') }}
+          body: |
+            Changes in this release:
+            ${{ join(github.event.commits.*.message, '\n- ') }}
+          draft: false
+          prerelease: false
       # - name: Build Docker Image
       #   uses: docker/build-push-action@v2
       #   with:
@@ -30,25 +42,14 @@ jobs:
       #     push: true
       #     tags: danfedick/sys-echo:latest
       
-      # - name: Create Release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: v${{ github.ref }}
-      #     release_name: Release v${{ github.ref }}
-      #     body: |
-      #       Changes in this release:
-      #       ${{ join(github.event.commits.*.message, '\n- ') }}
-      #     draft: false
-      #     prerelease: false
+
       
       # - name: Upload Ubuntu Docker Image
       #   uses: docker/build-push-action@v2
       #   with:
       #     context: .
       #     push: true
-      #     tags: danfedick/sys-echo:${{ github.ref }}
+      #     tags: danfedick/sys-echo:${{ github.sha | truncate(7, '') }}
       
       # - name: Logout from Docker
       #   run: docker logout
