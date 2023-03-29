@@ -5,9 +5,8 @@ RUN apk add --no-cache \
     wget \
     jq
 
-# Download sys-echo binary
-ARG SYS_ECHO_VERSION=v1.0.0
-RUN wget -O /usr/local/bin/sys-echo "https://github.com/demoland/sys-echo/releases/download/${SYS_ECHO_VERSION}/sys-echo"
+# Copy sys-echo binary from local file system to Docker image
+COPY sys-echo-linux /usr/local/bin/sys-echo
 
 # Make sys-echo binary executable
 RUN chmod +x /usr/local/bin/sys-echo
