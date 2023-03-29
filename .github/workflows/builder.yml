@@ -27,7 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.sha.slice(0, 5) }}
+          tag_name: "v${{ github.sha.slice(0, 5) }}"
           release_name: Release v${{ github.sha.slice(0, 5) }}
           body: |
             Changes in this release:
