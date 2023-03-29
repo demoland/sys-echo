@@ -29,6 +29,7 @@ jobs:
         run: GOOS=darwin go build -o sys-echo-darwin main.go
 
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,6 +42,26 @@ jobs:
             ${{ join(github.event.commits.*.message, '\n- ') }}
           draft: false
           prerelease: false
+      - name: Upload Linux Binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./sys-echo-linux
+          asset_name: sys-echo-linux
+          asset_content_type: application/octet-stream
+
+      - name: Upload Darwin Binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./sys-echo-darwin
+          asset_name: sys-echo-darwin
+          asset_content_type: application/octet-stream
+
       - name: Build and push Docker image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
